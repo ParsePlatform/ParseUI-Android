@@ -34,7 +34,8 @@ To run our sample apps, you need to import this repo as a standalone Gradle proj
         compile project(':ParseLoginUI')
 
         // Uncomment if using Facebook Login
-        // compile 'com.facebook.android:facebook-android-sdk:3.21.0'
+        // compile 'com.facebook.android:facebook-android-sdk:3.21.1'
+
 
 4. Add the following to your `AndroidManifest.xml` within the `<application></application>` section.  You can see a complete example in our [sample app](https://github.com/ParsePlatform/ParseUI-Android/blob/master/ParseLoginSampleBasic/AndroidManifest.xml).
 

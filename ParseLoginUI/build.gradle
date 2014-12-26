@@ -5,7 +5,7 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.0'
     compile fileTree(dir: 'libs', include: '*.jar')
 
-    provided 'com.facebook.android:facebook-android-sdk:3.21.0'
+    provided 'com.facebook.android:facebook-android-sdk:3.21.1'
 }
 
 android {
