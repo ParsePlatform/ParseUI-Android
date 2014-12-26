@@ -78,7 +78,7 @@ This library is ultra-customizable, allowing you to configure the login experien
 As shown in the Getting Started section, you can directly configure the login experience through the activity
 meta-data in `AndroidManifest.xml`.
 
-Please see the [Parse website](http://www.parse.com/docs/android_guide#ui-login) for additional documentation.
+Please see the [Parse website](https://www.parse.com/docs/android_guide#ui-login) for additional documentation.
 
 ## Contributing
 See the CONTRIBUTING file for how to help out.
