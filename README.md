@@ -19,20 +19,22 @@ To run our sample apps, you need to import this repo as a standalone Gradle proj
 1. Clone this repository onto your machine.
 2. Import this repository's project with Android Studio (File > Import Project > `ParseUI-Android` folder). The project has Maven dependencies on the Facebook SDK and the Bolts framework.  Android Studio automatically resolves these via Gradle.
 3. Specify the following in `res/values/strings.xml` of each sample project:
-  * <code>parse_app_id</code> and <code>parse_client_key</code>
-  * <code>facebook_app_id</code>
-  * <code>twitter_consumer_key</code> and <code>twitter_consumer_secret<code>
+    * <code>parse_app_id</code> and <code>parse_client_key</code>
+    * <code>facebook_app_id</code>
+    * <code>twitter_consumer_key</code> and <code>twitter_consumer_secret<code>
 4. Build (Tools > Android > Sync Project with Gradle Files) and run the sample apps using Android Studio.
 
 #### Importing into Your App
 1. Clone this repository onto your machine.
 2. Import `ParseLoginUI` as a module into your app's Android Studio Project
-  * File > Import Module in Android Studio
-  * In the New Module pop-up, set the source directory to the `ParseUI-Android/ParseLoginUI` folder within the cloned repo.
-3. Add the following to the `dependencies` section of app's build.gradle.  This adds a Maven dependency to the Facebook SDK and a module dependency to `ParseLoginUI`.
+    * File > Import Module in Android Studio
+    * In the New Module pop-up, set the source directory to the `ParseUI-Android/ParseLoginUI` folder within the cloned repo.
+3. Add the following to the `dependencies` section of app's build.gradle.  This adds a module dependency to `ParseLoginUI` (and optional Maven dependency for Facebook SDK).
 
-        compile 'com.facebook.android:facebook-android-sdk:3.21.0'
         compile project(':ParseLoginUI')
+
+        // Uncomment if using Facebook Login
+        // compile 'com.facebook.android:facebook-android-sdk:3.21.0'
 
 4. Add the following to your `AndroidManifest.xml` within the `<application></application>` section.  You can see a complete example in our [sample app](https://github.com/ParsePlatform/ParseUI-Android/blob/master/ParseLoginSampleBasic/AndroidManifest.xml).
 
@@ -47,31 +49,14 @@ To run our sample apps, you need to import this repo as a standalone Gradle proj
             <meta-data
                 android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_EMAIL_AS_USERNAME"
                 android:value="true"/>
-            <meta-data
-                android:name="com.parse.ui.ParseLoginActivity.FACEBOOK_LOGIN_ENABLED"
-                android:value="true"/>
-            <meta-data
-                android:name="com.parse.ui.ParseLoginActivity.TWITTER_LOGIN_ENABLED"
-                android:value="true"/>
         </activity>
-        <activity
-            android:name="com.facebook.LoginActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"/>
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
 
 5. Specify the following in `res/values/strings.xml` of your app
 
         <string name="parse_app_id">YOUR_PARSE_APP_ID</string>
         <string name="parse_client_key">YOUR_PARSE_CLIENT_KEY</string>
-        <string name="facebook_app_id">YOUR_FACEBOOK_APP_ID</string>
-        <string name="twitter_consumer_key">YOUR_TWITTER_CONSUMER_KEY</string>
-        <string name="twitter_consumer_secret">YOUR_TWITTER_CONSUMER_SECRET</string>
-        <string name="app_name">YOUR_APP_NAME</string>
 
-In the above instructions, you can skip sections related to Facebook and Twitter if you just want Parse Login.
+For an example of setting up Facebook and Twitter integrations, please see `AndroidManfest.xml` and `res/values/strings.xml` in our [sample app](https://github.com/ParsePlatform/ParseUI-Android/blob/master/ParseLoginSampleBasic).
 
 ## Documentation
 For complete details about this library project, please see our [documentation](https://www.parse.com/docs/android_guide#ui-login) on the Parse website.
