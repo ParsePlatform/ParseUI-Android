@@ -29,13 +29,17 @@ To run our sample apps, you need to import this repo as a standalone Gradle proj
 2. Import `ParseLoginUI` as a module into your app's Android Studio Project
     * File > Import Module in Android Studio
     * In the New Module pop-up, set the source directory to the `ParseUI-Android/ParseLoginUI` folder within the cloned repo.
-3. Add the following to the `dependencies` section of app's build.gradle.  This adds a module dependency to `ParseLoginUI` (and optional Maven dependency for Facebook SDK).
+3. Add the following to the `dependencies` section of your app's build.gradle.
 
+        // Module dependency on ParseLoginUI library sources
         compile project(':ParseLoginUI')
 
-        // Uncomment if using Facebook Login
-        // compile 'com.facebook.android:facebook-android-sdk:3.21.1'
+        // If your app's project does not have the Parse Android SDK already, copy it into your project at YOUR_FOLDER_PATH.
+        // The Parse SDK filename must match the "provided files(...)" line in ParseLoginUI/build.gradle.
+        compile files('<YOUR_FOLDER_PATH>/Parse-1.8.2.jar')
 
+        // Uncomment if using Facebook Login (optional Maven dependency)
+        // compile 'com.facebook.android:facebook-android-sdk:3.21.1'
 
 4. Add the following to your `AndroidManifest.xml` within the `<application></application>` section.  You can see a complete example in our [sample app](https://github.com/ParsePlatform/ParseUI-Android/blob/master/ParseLoginSampleBasic/AndroidManifest.xml).
 
