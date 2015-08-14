@@ -693,6 +693,13 @@ public class ParseQueryAdapter<T extends ParseObject> extends BaseAdapter {
   private boolean shouldShowPaginationCell() {
     return this.paginationEnabled && this.objects.size() > 0 && this.hasNextPage;
   }
+  
+  /**
+   *  @return hasNextPage
+   */
+  public boolean isHasNextPage(){
+    return this.hasNextPage;
+  }
 
   private void notifyOnLoadingListeners() {
     for (OnQueryLoadListener<T> listener : this.onQueryLoadListeners) {
