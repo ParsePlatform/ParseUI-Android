@@ -1,0 +1,18 @@
+apply plugin: 'android'
+
+dependencies {
+    // rootProject.ext.* variables are defined in project gradle file, you can also use path here.
+    compile project(':ParseLoginUI')
+    compile rootProject.ext.androidSupport
+    compile rootProject.ext.parse
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+    }
+}

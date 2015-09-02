@@ -3,6 +3,8 @@ apply plugin: 'android-library'
 dependencies {
     compile 'com.parse.bolts:bolts-android:1.2.1'
     compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
     compile 'com.parse:parse-android:1.10.1'
 
     provided 'com.facebook.android:facebook-android-sdk:4.0.1'
