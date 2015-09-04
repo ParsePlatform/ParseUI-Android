@@ -24,10 +24,6 @@ import bolts.Capture;
  */
 public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends RecyclerView.Adapter<ParseQueryRecyclerViewAdapter.ViewHolder> {
 
-    private static final int DEFAULT_TYPE = 0;
-    private static final int PAGINATION_CELL_ROW_TYPE = 1;
-
-
     /**
      * Implement to construct your own custom {@link ParseQuery} for fetching objects.
      */
@@ -377,14 +373,6 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == getPaginationCellRow()) {
-            return PAGINATION_CELL_ROW_TYPE;
-        }
-        return DEFAULT_TYPE;
-    }
-
     private View getDefaultView() {
         if (this.itemResourceId != null) {
             return View.inflate(context, itemResourceId, null);
@@ -407,30 +395,9 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
         return view;
     }
 
-    /**
-     * Override this method to customize the "Load Next Page" cell, visible when pagination is turned
-     * on and there may be more results to display.
-     * <p/>
-     * This method expects a {@code TextView} with id {@code android.R.id.text1}.
-     *
-     * @return The view object that allows the user to paginate.
-     */
-    public View getNextPageView() {
-        View v = getDefaultView();
-        TextView textView = (TextView) v.findViewById(android.R.id.text1);
-        textView.setText("Load more...");
-        return v;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        switch (viewType) {
-            case DEFAULT_TYPE:
-                return new ViewHolder(getDefaultView());
-            case PAGINATION_CELL_ROW_TYPE:
-                return new ViewHolder(getNextPageView());
-        }
-        return null;
+        return new ViewHolder(getDefaultView());
     }
 
     @Override
