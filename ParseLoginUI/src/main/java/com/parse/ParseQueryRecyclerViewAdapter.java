@@ -253,11 +253,11 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
     }
 
     public void clear() {
-        this.objectPages.clear();
+        objectPages.clear();
         cancelAllQueries();
         syncObjectsWithPages();
-        this.notifyDataSetChanged();
-        this.currentPage = 0;
+        notifyDataSetChanged();
+        currentPage = 0;
     }
 
     private void cancelAllQueries() {
@@ -285,7 +285,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
             setPageOnQuery(page, query);
         }
 
-        this.notifyOnLoadingListeners();
+        notifyOnLoadingListeners();
 
         // Create a new page
         if (page >= objectPages.size()) {
@@ -405,10 +405,10 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
         if (position < objects.size()) {
             final T object = objects.get(position);
 
-            if (this.textKey == null) {
+            if (textKey == null) {
                 viewHolder.textView.setText(object.getObjectId());
-            } else if (object.get(this.textKey) != null) {
-                viewHolder.textView.setText(object.get(this.textKey).toString());
+            } else if (object.get(textKey) != null) {
+                viewHolder.textView.setText(object.get(textKey).toString());
             } else {
                 viewHolder.textView.setText(null);
             }
@@ -418,8 +418,8 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
                     throw new IllegalStateException(
                             "Your object views must have a ParseImageView whose id attribute is 'android.R.id.icon' if an imageKey is specified");
                 }
-                if (!this.imageViewSet.containsKey(viewHolder.imageView)) {
-                    this.imageViewSet.put(viewHolder.imageView, null);
+                if (!imageViewSet.containsKey(viewHolder.imageView)) {
+                    imageViewSet.put(viewHolder.imageView, null);
                 }
                 viewHolder.imageView.setPlaceholder(placeholder);
                 viewHolder.imageView.setParseFile((ParseFile) object.get(imageKey));
@@ -453,9 +453,9 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
 
     @Override
     public int getItemCount() {
-        int count = this.objects.size();
+        int count = objects.size();
 
-        if (this.shouldShowPaginationCell()) {
+        if (shouldShowPaginationCell()) {
             count++;
         }
 
@@ -465,9 +465,9 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
     @Override
     public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
         super.registerAdapterDataObserver(observer);
-        this.dataSetObservers.put(observer, null);
-        if (this.autoload) {
-            this.loadObjects();
+        dataSetObservers.put(observer, null);
+        if (autoload) {
+            loadObjects();
         }
     }
 
@@ -494,17 +494,17 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
     }
 
     private boolean shouldShowPaginationCell() {
-        return this.paginationEnabled && this.objects.size() > 0 && this.hasNextPage;
+        return paginationEnabled && objects.size() > 0 && hasNextPage;
     }
 
     private void notifyOnLoadingListeners() {
-        for (OnQueryLoadListener<T> listener : this.onQueryLoadListeners) {
+        for (OnQueryLoadListener<T> listener : onQueryLoadListeners) {
             listener.onLoading();
         }
     }
 
     private void notifyOnLoadedListeners(List<T> objects, Exception e) {
-        for (OnQueryLoadListener<T> listener : this.onQueryLoadListeners) {
+        for (OnQueryLoadListener<T> listener : onQueryLoadListeners) {
             listener.onLoaded(objects, e);
         }
     }
@@ -523,8 +523,8 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
      *          used in its mutated form.
      */
     protected void setPageOnQuery(int page, ParseQuery<T> query) {
-        query.setLimit(this.objectsPerPage + 1);
-        query.setSkip(page * this.objectsPerPage);
+        query.setLimit(objectsPerPage + 1);
+        query.setSkip(page * objectsPerPage);
     }
 
     public void setTextKey(String textKey) {
@@ -540,7 +540,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
     }
 
     public int getObjectsPerPage() {
-        return this.objectsPerPage;
+        return objectsPerPage;
     }
 
     /**
@@ -568,7 +568,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
             return;
         }
         this.placeholder = placeholder;
-        Iterator<ParseImageView> iter = this.imageViewSet.keySet().iterator();
+        Iterator<ParseImageView> iter = imageViewSet.keySet().iterator();
         ParseImageView imageView;
         while (iter.hasNext()) {
             imageView = iter.next();
@@ -590,22 +590,22 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
      *          Defaults to true.
      */
     public void setAutoload(boolean autoload) {
-        if (this.autoload == autoload) {
+        if (autoload == autoload) {
             // An extra precaution to prevent an overzealous setAutoload(true) after assignment to an
             // AdapterView from triggering an unnecessary additional loadObjects().
             return;
         }
         this.autoload = autoload;
-        if (this.autoload && !this.dataSetObservers.isEmpty() && this.objects.isEmpty()) {
-            this.loadObjects();
+        if (autoload && !dataSetObservers.isEmpty() && objects.isEmpty()) {
+            loadObjects();
         }
     }
 
     public void addOnQueryLoadListener(OnQueryLoadListener<T> listener) {
-        this.onQueryLoadListeners.add(listener);
+        onQueryLoadListeners.add(listener);
     }
 
     public void removeOnQueryLoadListener(OnQueryLoadListener<T> listener) {
-        this.onQueryLoadListeners.remove(listener);
+        onQueryLoadListeners.remove(listener);
     }
 }
