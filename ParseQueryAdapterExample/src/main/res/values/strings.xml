@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Please put your application's app ID and keys here -->
+    <!-- TODO: change before merging -->
     <string name="parse_app_id">4R4qtxUJIYGzoDrJJfNKki1xpFMtWtOwZIeDTGjJ</string>
     <string name="parse_client_key">lcTXrnkl9A7dnUlVlKMnnoKMo8Be9z5G8QJ3qINq</string>
 
