@@ -511,7 +511,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
   }
 
   @Override
-  public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+  public void onBindViewHolder(ParseQueryRecyclerViewAdapter.ViewHolder viewHolder, final int position) {
     if (position < objects.size()) {
       final T object = objects.get(position);
       viewHolder.bind(object, position);
