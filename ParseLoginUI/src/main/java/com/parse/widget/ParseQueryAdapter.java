@@ -19,7 +19,7 @@
  *
  */
 
-package com.parse;
+package com.parse.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -28,6 +28,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.parse.FindCallback;
+import com.parse.ParseClassName;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,15 +48,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import bolts.Capture;
 
 /**
- * A {@code ParseQueryRecyclerViewAdapter} handles the fetching of objects by page, and displaying
+ * A {@code ParseQueryAdapter} handles the fetching of objects by page, and displaying
  * objects as views in a {@link android.support.v7.widget.RecyclerView}.
  * <p/>
  * This class is highly configurable, but also intended to be easy to get started with. See below
- * for an example of using a {@code ParseQueryRecyclerViewAdapter} inside an
+ * for an example of using a {@code ParseQueryAdapter} inside an
  * {@link android.app.Activity}'s {@code onCreate}:
  * <pre>
- * final ParseQueryRecyclerViewAdapter adapter
- *         = new ParseQueryRecyclerViewAdapter(this, &quot;TestObject&quot;);
+ * final ParseQueryAdapter adapter
+ *         = new ParseQueryAdapter(this, &quot;TestObject&quot;);
  * adapter.setTextKey(&quot;name&quot;);
  *
  * RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -62,8 +70,8 @@ import bolts.Capture;
  * <pre>
  * // Instantiate a QueryFactory to define the ParseQuery to be used for fetching items in this
  * // Adapter.
- * ParseQueryRecyclerViewAdapter.QueryFactory&lt;ParseObject&gt; factory =
- *     new ParseQueryRecyclerViewAdapter.QueryFactory&lt;ParseObject&gt;() {
+ * ParseQueryAdapter.QueryFactory&lt;ParseObject&gt; factory =
+ *     new ParseQueryAdapter.QueryFactory&lt;ParseObject&gt;() {
  *       public ParseQuery create() {
  *         ParseQuery query = new ParseQuery(&quot;Customer&quot;);
  *         query.whereEqualTo(&quot;activated&quot;, true);
@@ -72,9 +80,9 @@ import bolts.Capture;
  *       }
  *     };
  *
- * // Pass the factory into the ParseQueryRecyclerViewAdapter's constructor.
- * ParseQueryRecyclerViewAdapter&lt;ParseObject&gt; adapter
- *         = new ParseQueryRecyclerViewAdapter&lt;ParseObject&gt;(this, factory);
+ * // Pass the factory into the ParseQueryAdapter's constructor.
+ * ParseQueryAdapter&lt;ParseObject&gt; adapter
+ *         = new ParseQueryAdapter&lt;ParseObject&gt;(this, factory);
  * adapter.setTextKey(&quot;name&quot;);
  *
  * // Perhaps set a callback to be fired upon successful loading of a new set of ParseObjects.
@@ -90,7 +98,7 @@ import bolts.Capture;
  *
  * </pre>
  */
-public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends RecyclerView.Adapter<ParseQueryRecyclerViewAdapter.ViewHolder> {
+public class ParseQueryAdapter<T extends ParseObject> extends RecyclerView.Adapter<ParseQueryAdapter.ViewHolder> {
 
   /**
    * Implement to construct your own custom {@link ParseQuery} for fetching objects.
@@ -236,7 +244,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
   private List<OnQueryLoadListener<T>> onQueryLoadListeners = new ArrayList<>();
 
   /**
-   * Constructs a {@code ParseQueryRecyclerViewAdapter}. Given a {@link ParseObject} subclass,
+   * Constructs a {@code ParseQueryAdapter}. Given a {@link ParseObject} subclass,
    * this adapter will fetch and display all {@link ParseObject}s of the specified class,
    * ordered by creation time.
    *
@@ -245,12 +253,12 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
    * @param clazz
    *          The {@link ParseObject} subclass type to fetch and display.
    */
-  public ParseQueryRecyclerViewAdapter(Context context, Class<? extends ParseObject> clazz) {
-    this(context, ParseObject.getClassName(clazz));
+  public ParseQueryAdapter(Context context, Class<? extends ParseObject> clazz) {
+    this(context, getClassName(clazz));
   }
 
   /**
-   * Constructs a {@code ParseQueryRecyclerViewAdapter}. Given a {@link ParseObject} subclass,
+   * Constructs a {@code ParseQueryAdapter}. Given a {@link ParseObject} subclass,
    * this adapter will fetch and display all {@link ParseObject}s of the specified class, ordered
    * by creation time.
    *
@@ -259,7 +267,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
    * @param className
    *          The name of the Parse class of {@link ParseObject}s to display.
    */
-  public ParseQueryRecyclerViewAdapter(Context context, final String className) {
+  public ParseQueryAdapter(Context context, final String className) {
     this(context, new QueryFactory<T>() {
       @Override
       public ParseQuery<T> create() {
@@ -276,7 +284,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
   }
 
   /**
-   * Constructs a {@code ParseQueryRecyclerViewAdapter}. Given a {@link ParseObject} subclass,
+   * Constructs a {@code ParseQueryAdapter}. Given a {@link ParseObject} subclass,
    * this adapter will fetch and display all {@link ParseObject}s of the specified class, ordered
    * by creation time.
    *
@@ -287,13 +295,13 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
    * @param itemViewResource
    *        A resource id that represents the layout for an item in the AdapterView.
    */
-  public ParseQueryRecyclerViewAdapter(
+  public ParseQueryAdapter(
           Context context, Class<? extends ParseObject> clazz, int itemViewResource) {
-    this(context, ParseObject.getClassName(clazz), itemViewResource);
+    this(context, getClassName(clazz), itemViewResource);
   }
 
   /**
-   * Constructs a {@code ParseQueryRecyclerViewAdapter}. Given a {@link ParseObject} subclass,
+   * Constructs a {@code ParseQueryAdapter}. Given a {@link ParseObject} subclass,
    * this adapter will fetch and display all {@link ParseObject}s of the specified class, ordered
    * by creation time.
    *
@@ -304,7 +312,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
    * @param itemViewResource
    *        A resource id that represents the layout for an item in the AdapterView.
    */
-  public ParseQueryRecyclerViewAdapter(
+  public ParseQueryAdapter(
           Context context, final String className, int itemViewResource) {
     this(context, new QueryFactory<T>() {
       @Override
@@ -318,11 +326,11 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
 
     if (className == null) {
       throw new RuntimeException(
-              "You need to specify a className for the ParseQueryRecyclerViewAdapter");
+              "You need to specify a className for the ParseQueryAdapter");
     }
   }
   /**
-   * Constructs a {@code ParseQueryRecyclerViewAdapter}. Allows the caller to define further
+   * Constructs a {@code ParseQueryAdapter}. Allows the caller to define further
    * constraints on the {@link ParseQuery} to be used when fetching items from Parse.
    *
    * @param context
@@ -330,12 +338,12 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
    * @param queryFactory
    *          A {@link QueryFactory} to build a {@link ParseQuery} for fetching objects.
    */
-  public ParseQueryRecyclerViewAdapter(Context context, QueryFactory<T> queryFactory) {
+  public ParseQueryAdapter(Context context, QueryFactory<T> queryFactory) {
     this(context, queryFactory, -1);
   }
 
   /**
-   * Constructs a {@code ParseQueryRecyclerViewAdapter}. Allows the caller to define further
+   * Constructs a {@code ParseQueryAdapter}. Allows the caller to define further
    * constraints on the {@link ParseQuery} to be used when fetching items from Parse.
    *
    * @param context
@@ -345,7 +353,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
    * @param itemViewResource
    *          A resource id (>0) that represents the layout for an item in the AdapterView.
    */
-  public ParseQueryRecyclerViewAdapter(
+  public ParseQueryAdapter(
           Context context, QueryFactory<T> queryFactory, int itemViewResource) {
     super();
     this.context = context;
@@ -421,11 +429,14 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
                 (query.getCachePolicy() == ParseQuery.CachePolicy.CACHE_THEN_NETWORK && !firstCallBack.get())) {
           runningQueries.remove(query);
         }
-        if ((!Parse.isLocalDatastoreEnabled() &&
-                query.getCachePolicy() == ParseQuery.CachePolicy.CACHE_ONLY)
-                && (e != null) && e.getCode() == ParseException.CACHE_MISS) {
-          // no-op on cache miss
-          return;
+        try {
+          if (query.getCachePolicy() == ParseQuery.CachePolicy.CACHE_ONLY
+                  && e != null && e.getCode() == ParseException.CACHE_MISS) {
+            // no-op on cache miss
+            return;
+          }
+        } catch (IllegalStateException ignore) {
+          // LocaleDatastore disabled
         }
 
         if ((e != null) && ((e.getCode() == ParseException.CONNECTION_FAILED) || (e.getCode() != ParseException.CACHE_MISS))) {
@@ -511,7 +522,7 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
   }
 
   @Override
-  public void onBindViewHolder(ParseQueryRecyclerViewAdapter.ViewHolder viewHolder, final int position) {
+  public void onBindViewHolder(ParseQueryAdapter.ViewHolder viewHolder, final int position) {
     if (position < objects.size()) {
       final T object = objects.get(position);
       viewHolder.bind(object, position);
@@ -680,5 +691,20 @@ public class ParseQueryRecyclerViewAdapter<T extends ParseObject> extends Recycl
 
   public void removeOnQueryLoadListener(OnQueryLoadListener<T> listener) {
     onQueryLoadListeners.remove(listener);
+  }
+
+  /**
+   * Gets the class name based on the {@link ParseClassName} annotation associated with a class.
+   *
+   * @param clazz
+   *          The class to inspect.
+   * @return The name of the Parse class, if one is provided. Otherwise, {@code null}.
+   */
+  private static String getClassName(Class<? extends ParseObject> clazz) {
+    ParseClassName info = clazz.getAnnotation(ParseClassName.class);
+    if (info == null) {
+      return null;
+    }
+    return info.value();
   }
 }

@@ -26,9 +26,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.parse.ParseQueryRecyclerViewAdapter;
 import com.parse.ParseUser;
-import com.parse.queryadaptersample.R;
+import com.parse.widget.ParseQueryAdapter;
 
 /**
  * Shows the user profile. This simple activity can function regardless of whether the user
@@ -48,7 +47,7 @@ public class SampleActivity extends Activity {
 
     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-    ParseQueryRecyclerViewAdapter adapter = new ParseQueryRecyclerViewAdapter(this, "TestClass");
+    ParseQueryAdapter adapter = new ParseQueryAdapter(this, "TestClass");
     adapter.loadObjects();
 
     recyclerView.setAdapter(adapter);
