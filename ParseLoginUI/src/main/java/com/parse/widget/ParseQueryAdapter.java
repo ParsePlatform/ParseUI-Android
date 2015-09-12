@@ -191,6 +191,14 @@ public class ParseQueryAdapter<T extends ParseObject> extends RecyclerView.Adapt
         }
       });
     }
+
+    public TextView getTextView() {
+      return textView;
+    }
+
+    public ParseImageView getImageView() {
+      return imageView;
+    }
   }
 
   // The key to use to display on the cell text label.
@@ -674,7 +682,7 @@ public class ParseQueryAdapter<T extends ParseObject> extends RecyclerView.Adapt
    *          Defaults to true.
    */
   public void setAutoload(boolean autoload) {
-    if (autoload == autoload) {
+    if (this.autoload == autoload) {
       // An extra precaution to prevent an overzealous setAutoload(true) after assignment to an
       // AdapterView from triggering an unnecessary additional loadObjects().
       return;
