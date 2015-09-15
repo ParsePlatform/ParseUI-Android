@@ -30,8 +30,8 @@ import com.parse.ParseUser;
 import com.parse.widget.ParseQueryAdapter;
 
 /**
- * Shows the user profile. This simple activity can function regardless of whether the user
- * is currently logged in.
+ * Shows a list of "testString"s in the class "TestClass" using a
+ * {@link android.support.v7.widget.RecyclerView} and {@code com.parse.widget.ParseQueryAdapter}.
  */
 public class SampleActivity extends Activity {
 
@@ -48,6 +48,11 @@ public class SampleActivity extends Activity {
     recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
     ParseQueryAdapter adapter = new ParseQueryAdapter(this, "TestClass");
+
+    // Configure adapter.
+    adapter.setObjectsPerPage(3);
+    adapter.setTextKey("testString");
+
     adapter.loadObjects();
 
     recyclerView.setAdapter(adapter);

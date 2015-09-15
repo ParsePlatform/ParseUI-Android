@@ -182,7 +182,7 @@ public class ParseQueryAdapter<T extends ParseObject> extends RecyclerView.Adapt
     public void setNextView() {
       textView.setText("Load more...");
       if (imageView != null) {
-        imageView.setVisibility(View.GONE);
+        imageView.setVisibility(View.INVISIBLE);
       }
       textView.setOnClickListener(new View.OnClickListener() {
         @Override
