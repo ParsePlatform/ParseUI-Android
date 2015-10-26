@@ -42,7 +42,7 @@ public class ViewPagerDemoActivity extends FragmentActivity {
         mLoader.loadObjects();
 
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
