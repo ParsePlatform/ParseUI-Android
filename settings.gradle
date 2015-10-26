@@ -1,7 +1,7 @@
 rootProject.name = 'ParseAndroidUI'
 
 // Parse Login UI Library
-include ':ParseLoginUI'
+include ':ParseLoginUI', ':ParseListLoaderExample'
 
 // Sample Projects
 include ':ParseLoginSampleBasic'
