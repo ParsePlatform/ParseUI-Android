@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.tuanchauict.parselistloaderexample.MainActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+    <Button
+        android:id="@+id/create_1000_objects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create 1000 objects"
+        />
+
+    <Button
+        android:id="@+id/goto_list_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List View Demo"
+        />
+    <Button
+        android:id="@+id/goto_viewpager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ViewPager Demo"
+        />
+    <Button
+        android:id="@+id/goto_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recycler View Demo"
+        />
+
+</LinearLayout>
