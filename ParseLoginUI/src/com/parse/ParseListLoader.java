@@ -49,15 +49,6 @@ public class ParseListLoader<T extends ParseObject> {
         return !mOnQueryLoadListeners.isEmpty();
     }
 
-    /**
-     * support this function because sometime, we have to force the list reload
-     *
-     * @param hasNextPage
-     */
-    public void setHasNextPage(boolean hasNextPage) {
-        mHasNextPage = hasNextPage;
-    }
-
     public boolean hasNextPage() {
         return mHasNextPage;
     }
@@ -71,13 +62,10 @@ public class ParseListLoader<T extends ParseObject> {
     }
 
     private void loadObjects(final int page, final boolean shouldClear) {
-        if (!mHasNextPage) {
-            return;
-        }
+
         if (mQueryFactory == null) {
             return;
         }
-
         final ParseQuery<T> query = mQueryFactory.create();
         if (query == null) {
             return;
@@ -85,13 +73,13 @@ public class ParseListLoader<T extends ParseObject> {
 
         mRunningQueries.add(query);
 
-        setPageOnQuery(page, query);
         notifyOnLoadingListeners();
         if (page >= mObjectPages.size()) {
             for (int i = mObjectPages.size(); i <= page; i++) {
                 mObjectPages.add(new ArrayList<T>());
             }
         }
+        setPageOnQuery(page, query);
 
         final int objectsPerPage = mObjectsPerPage;
 
@@ -105,7 +93,6 @@ public class ParseListLoader<T extends ParseObject> {
                         || e.getCode() != ParseException.CACHE_MISS) {
                     if (e != null && (e.getCode() == ParseException.CONNECTION_FAILED
                             || e.getCode() != ParseException.CACHE_MISS)) {
-//                        mHasNextPage = false;
                     } else if (foundObjects != null) {
                         if (shouldClear && firstCallback.get()) {
                             mObjectPages.clear();
@@ -159,7 +146,13 @@ public class ParseListLoader<T extends ParseObject> {
 
     private void setPageOnQuery(int page, ParseQuery<T> query) {
         query.setLimit(mObjectsPerPage + 1);
-        query.setSkip(page * mObjectsPerPage);
+        // This code helps to fix bug on changing mObjectsPerPage on the fly
+        int skip = 0;
+        for(int i = 0; i < page; i++){
+            skip += mObjectPages.get(i).size();
+        }
+
+        query.setSkip(skip);
     }
 
     public void cancelAllRunningQueries() {

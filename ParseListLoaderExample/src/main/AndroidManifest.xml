@@ -6,14 +6,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:label="ParseListLoaderExample"
         android:supportsRtl="true"
         android:name=".ListLoaderApplication"
         >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="ParseListLoaderExample"
 
             >
             <intent-filter>
