@@ -32,6 +32,8 @@ dependencies {
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile 'org.skyscreamer:jsonassert:1.2.3'
+
+    compile 'com.android.support:support-v13:23.1.0'
 }
 
 android {
@@ -39,7 +41,7 @@ android {
     buildToolsVersion "21.1.1"
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 13
         targetSdkVersion 21
         versionName project.version
         versionCode 1
