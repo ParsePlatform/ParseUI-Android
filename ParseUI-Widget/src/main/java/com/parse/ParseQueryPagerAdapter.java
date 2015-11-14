@@ -75,7 +75,7 @@ import bolts.Capture;
  * viewpager.setAdapter(adapter);
  * </pre>
  *
- * Modification by Pablo Baxter (Github: soaboz)
+ * Modification by Pablo Baxter (Github: pablobaxter)
  *
  */
 public class ParseQueryPagerAdapter<T extends ParseObject> extends FragmentStatePagerAdapter {
