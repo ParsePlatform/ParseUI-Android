@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;;
 
 import java.util.ArrayList;
@@ -554,17 +555,10 @@ public class ParseQueryPagerAdapter<T extends ParseObject> extends FragmentState
             @Nullable
             @Override
             public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-                LinearLayout view = new LinearLayout(activity);
-                LinearLayout.LayoutParams params = new LinearLayout.
-                        LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
-                params.gravity = Gravity.CENTER;
-                view.setLayoutParams(params);
-
-                TextView textView = new TextView(activity);
-                textView.setId(android.R.id.text1);
+                View view = getDefaultView(activity);
+				view.findViewById(android.R.id.icon).setVisibility(View.GONE);
+                TextView textView = (TextView)view.findViewById(android.R.id.text1);
                 textView.setText("Load more...");
-                view.addView(textView);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -676,27 +670,34 @@ public class ParseQueryPagerAdapter<T extends ParseObject> extends FragmentState
         if (this.itemResourceId != null) {
             return View.inflate(context, this.itemResourceId, null);
         }
-        LinearLayout view = new LinearLayout(context);
-        view.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams mainParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
-        view.setLayoutParams(mainParams);
+		RelativeLayout view = new RelativeLayout(context);
+		RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT);
+		view.setLayoutParams(relativeParams);
+
+        LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        RelativeLayout.LayoutParams linearParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+		linearParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        linearLayout.setLayoutParams(linearParams);
+		view.addView(linearLayout);
+
+		TextView textView = new TextView(context);
+		textView.setId(android.R.id.text1);
+		LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		params1.gravity = Gravity.CENTER_HORIZONTAL;
+		textView.setLayoutParams(params1);
+		textView.setGravity(Gravity.CENTER);
+		linearLayout.addView(textView);
 
         ParseImageView imageView = new ParseImageView(context);
         imageView.setId(android.R.id.icon);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, 500);
         params.gravity = Gravity.CENTER_HORIZONTAL;
         imageView.setLayoutParams(params);
-        view.addView(imageView);
-
-        TextView textView = new TextView(context);
-        textView.setId(android.R.id.text1);
-        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        params1.gravity = Gravity.CENTER_HORIZONTAL;
-        textView.setLayoutParams(params1);
-        textView.setPadding(8, 0, 0, 0);
-        view.addView(textView);
+		linearLayout.addView(imageView);
 
         return view;
     }
