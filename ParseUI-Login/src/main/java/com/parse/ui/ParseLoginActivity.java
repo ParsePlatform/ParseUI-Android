@@ -71,7 +71,9 @@ import com.parse.ParseFacebookUtils;
 public class ParseLoginActivity extends FragmentActivity implements
     ParseLoginFragment.ParseLoginFragmentListener,
     ParseLoginHelpFragment.ParseOnLoginHelpSuccessListener,
-    ParseOnLoginSuccessListener, ParseOnLoadingListener {
+    ParseOnLoginSuccessListener,
+    ParseOnLoadingListener,
+    ParseOnSignupSuccessListener {
 
   public static final String LOG_TAG = "ParseLoginActivity";
 
@@ -157,13 +159,23 @@ public class ParseLoginActivity extends FragmentActivity implements
   }
 
   /**
-   * Called when the user successfully logs in or signs up.
+   * Called when the user successfully logs in.
    */
   @Override
   public void onLoginSuccess() {
     // This default implementation returns to the parent activity with
     // RESULT_OK.
-    // You can change this implementation if you want a different behavior.
+    setResult(RESULT_OK);
+    finish();
+  }
+
+  /**
+   * Called when the user successfully signs up.
+   */
+  @Override
+  public void onSignupSuccess() {
+    // This default implementation returns to the parent activity with
+    // RESULT_OK.
     setResult(RESULT_OK);
     finish();
   }

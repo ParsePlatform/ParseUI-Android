@@ -49,7 +49,7 @@ public class ParseSignupFragment extends ParseLoginFragmentBase implements OnCli
   private EditText emailField;
   private EditText nameField;
   private Button createAccountButton;
-  private ParseOnLoginSuccessListener onLoginSuccessListener;
+  private ParseOnSignupSuccessListener onSignupSuccessListener;
 
   private ParseLoginConfig config;
   private int minPasswordLength;
@@ -119,8 +119,8 @@ public class ParseSignupFragment extends ParseLoginFragmentBase implements OnCli
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
-    if (activity instanceof ParseOnLoginSuccessListener) {
-      onLoginSuccessListener = (ParseOnLoginSuccessListener) activity;
+    if (activity instanceof ParseOnSignupSuccessListener) {
+      onSignupSuccessListener = (ParseOnSignupSuccessListener) activity;
     } else {
       throw new IllegalArgumentException(
           "Activity must implemement ParseOnLoginSuccessListener");
@@ -230,6 +230,6 @@ public class ParseSignupFragment extends ParseLoginFragmentBase implements OnCli
   }
 
   private void signupSuccess() {
-    onLoginSuccessListener.onLoginSuccess();
+    onSignupSuccessListener.onSignupSuccess();
   }
 }
