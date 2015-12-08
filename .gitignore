@@ -43,13 +43,3 @@ gen-external-apklibs
 # Gradle
 .gradle
 build
-ParseUI-Widget/._src
-ParseUI-Widget/src/._androidTest
-ParseUI-Widget/src/._main
-ParseUI-Widget/src/androidTest/._AndroidManifest.xml
-ParseUI-Widget/src/androidTest/._java
-ParseUI-Widget/src/androidTest/._res
-ParseUI-Widget/src/androidTest/res/._drawable
-ParseUI-Widget/src/androidTest/res/._layout
-ParseUI-Widget/src/main/._AndroidManifest.xml
-ParseUI-Widget/src/main/._java
