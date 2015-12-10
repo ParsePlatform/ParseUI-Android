@@ -24,6 +24,7 @@ import com.android.builder.core.BuilderConstants
 apply plugin: 'android-library'
 
 version = "0.0.1"
+group = 'com.parse'
 
 dependencies {
     compile 'com.android.support:support-v4:23.0.1'
@@ -110,7 +111,7 @@ uploadArchives {
 
             licenses {
                 license {
-                    name 'BSD License'
+                    name 'Platform License'
                     url 'https://github.com/ParsePlatform/ParseUI-Android/blob/master/LICENSE'
                     distribution 'repo'
                 }

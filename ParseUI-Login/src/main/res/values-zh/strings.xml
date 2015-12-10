@@ -1,0 +1,42 @@
+<resources>
+
+    <string name="com_parse_ui_progress_dialog_text">载入中...</string>
+    <string name="com_parse_ui_username_input_hint">用户名</string>
+    <string name="com_parse_ui_password_input_hint">密码</string>
+    <string name="com_parse_ui_forgot_password_button_label"><u>忘记密码</u></string>
+    <string name="com_parse_ui_parse_login_button_label">登陆</string>
+    <string name="com_parse_ui_parse_signup_button_label">注册</string>
+    <string name="com_parse_ui_facebook_login_button_label">使用Facebook登陆</string>
+    <string name="com_parse_ui_twitter_login_button_label">使用Twitter登陆</string>
+    <string name="com_parse_ui_email_input_hint">邮箱</string>
+    <string name="com_parse_ui_confirm_password_input_hint">确认密码</string>
+    <string name="com_parse_ui_name_input_hint">姓名</string>
+    <string name="com_parse_ui_create_account_button_label">注册</string>
+    <string name="com_parse_ui_no_username_toast">请输入用户名</string>
+    <string name="com_parse_ui_no_password_toast">请输入密码</string>
+    <string name="com_parse_ui_parse_login_invalid_credentials_toast">用户名密码不匹配</string>
+    <string name="com_parse_ui_parse_login_failed_unknown_toast">登陆失败，请重试</string>
+    <string name="com_parse_ui_facebook_login_failed_toast">Facebook登陆失败</string>
+    <string name="com_parse_ui_twitter_login_failed_toast">Twitter登陆失败</string>
+
+    <plurals name="com_parse_ui_password_too_short_toast">
+        <item quantity="one">密码至少%d个字符</item>
+        <item quantity="other">密码至少%d个字符</item>
+    </plurals>
+
+    <string name="com_parse_ui_username_taken_toast">用户名已经存在，请换一个重试</string>
+    <string name="com_parse_ui_reenter_password_toast">请重新输入密码</string>
+    <string name="com_parse_ui_mismatch_confirm_password_toast">密码不匹配，请重试</string>
+    <string name="com_parse_ui_no_email_toast">请输入邮箱</string>
+    <string name="com_parse_ui_invalid_email_toast">邮箱无效，请更正并重试</string>
+    <string name="com_parse_ui_email_taken_toast">邮箱已经存在，请换一个重试</string>
+    <string name="com_parse_ui_no_name_toast">请输入姓名</string>
+    <string name="com_parse_ui_signup_failed_unknown_toast">注册失败，请稍后重试</string>
+    <string name="com_parse_ui_login_help_instructions">输入邮箱找回密码</string>
+    <string name="com_parse_ui_login_help_email_input_hint">邮箱</string>
+    <string name="com_parse_ui_login_help_submit_button_label">提交</string>
+    <string name="com_parse_ui_login_help_login_again_button_label">返回登陆</string>
+    <string name="com_parse_ui_login_help_submit_failed_unknown">重置密码失败，请重试</string>
+    <string name="com_parse_ui_login_help_email_sent">重置密码邮件已发送，请检查邮箱</string>
+
+</resources>

@@ -47,6 +47,7 @@ public class ParseLoginConfig {
   public static final String PARSE_LOGIN_EMAIL_AS_USERNAME = "com.parse.ui.ParseLoginActivity.PARSE_LOGIN_EMAIL_AS_USERNAME";
   public static final String PARSE_SIGNUP_MIN_PASSWORD_LENGTH = "com.parse.ui.ParseLoginActivity.PARSE_SIGNUP_MIN_PASSWORD_LENGTH";
   public static final String PARSE_SIGNUP_SUBMIT_BUTTON_TEXT = "com.parse.ui.ParseLoginActivity.PARSE_SIGNUP_SUBMIT_BUTTON_TEXT";
+  public static final String PARSE_SIGNUP_NAME_FIELD_ENABLED = "com.parse.ui.ParseLoginActivity.PARSE_SIGNUP_NAME_FIELD_ENABLED";
   public static final String FACEBOOK_LOGIN_ENABLED = "com.parse.ui.ParseLoginActivity.FACEBOOK_LOGIN_ENABLED";
   public static final String FACEBOOK_LOGIN_BUTTON_TEXT = "com.parse.ui.ParseLoginActivity.FACEBOOK_LOGIN_BUTTON_TEXT";
   public static final String FACEBOOK_LOGIN_PERMISSIONS = "com.parse.ui.ParseLoginActivity.FACEBOOK_LOGIN_PERMISSIONS";
@@ -70,6 +71,7 @@ public class ParseLoginConfig {
   private Boolean parseLoginEmailAsUsername;
   private Integer parseSignupMinPasswordLength;
   private CharSequence parseSignupSubmitButtonText;
+  private Boolean parseSignupNameFieldEnabled;
 
   private Boolean facebookLoginEnabled;
   private CharSequence facebookLoginButtonText;
@@ -158,6 +160,18 @@ public class ParseLoginConfig {
   public void setParseSignupSubmitButtonText(
       CharSequence parseSignupSubmitButtonText) {
     this.parseSignupSubmitButtonText = parseSignupSubmitButtonText;
+  }
+
+  public Boolean isParseSignupNameFieldEnabled() {
+    if (parseSignupNameFieldEnabled != null) {
+      return parseSignupNameFieldEnabled;
+    } else {
+      return true;
+    }
+  }
+
+  public void setParseSignupNameFieldEnabled(Boolean parseSignupNameFieldEnabled) {
+    this.parseSignupNameFieldEnabled = parseSignupNameFieldEnabled;
   }
 
   public boolean isFacebookLoginEnabled() {
@@ -267,6 +281,9 @@ public class ParseLoginConfig {
       bundle.putCharSequence(PARSE_SIGNUP_SUBMIT_BUTTON_TEXT,
           parseSignupSubmitButtonText);
     }
+    if (parseSignupNameFieldEnabled != null) {
+      bundle.putBoolean(PARSE_SIGNUP_NAME_FIELD_ENABLED, parseSignupNameFieldEnabled);
+    }
 
     if (facebookLoginEnabled != null) {
       bundle.putBoolean(FACEBOOK_LOGIN_ENABLED, facebookLoginEnabled);
@@ -335,6 +352,9 @@ public class ParseLoginConfig {
     }
     if (keys.contains(PARSE_SIGNUP_SUBMIT_BUTTON_TEXT)) {
       config.setParseSignupSubmitButtonText(bundle.getCharSequence(PARSE_SIGNUP_SUBMIT_BUTTON_TEXT));
+    }
+    if (keys.contains(PARSE_SIGNUP_NAME_FIELD_ENABLED)) {
+      config.setParseSignupNameFieldEnabled(bundle.getBoolean(PARSE_SIGNUP_NAME_FIELD_ENABLED));
     }
 
     if (keys.contains(FACEBOOK_LOGIN_ENABLED)) {

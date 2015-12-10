@@ -211,6 +211,18 @@ public class ParseLoginBuilder {
   }
 
   /**
+   * Whether to show the name field in the signup form. Default is true.
+   *
+   * @param enabled
+   *     Whether to show the name field in the signup form.
+   * @return The caller instance to allow chaining.
+   */
+  public ParseLoginBuilder setParseSignupNameFieldEnabled(boolean enabled) {
+    config.setParseSignupNameFieldEnabled(enabled);
+    return this;
+  }
+
+  /**
    * Whether to show the Facebook login option on the login screen. Default is
    * false.
    *

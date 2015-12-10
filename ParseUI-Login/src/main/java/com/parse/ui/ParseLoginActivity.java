@@ -89,6 +89,9 @@ public class ParseLoginActivity extends FragmentActivity implements
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    // Disable landscape
+    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
     this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
     // Combine options from incoming intent and the activity metadata

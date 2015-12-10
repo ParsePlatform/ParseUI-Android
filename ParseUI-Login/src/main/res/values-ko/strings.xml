@@ -1,0 +1,42 @@
+<resources>
+
+    <string name="com_parse_ui_progress_dialog_text">불러오는중...</string>
+    <string name="com_parse_ui_username_input_hint">아이디</string>
+    <string name="com_parse_ui_password_input_hint">암호</string>
+    <string name="com_parse_ui_forgot_password_button_label"><u>암호를 잃어버렸나요?</u></string>
+    <string name="com_parse_ui_parse_login_button_label">로그인</string>
+    <string name="com_parse_ui_parse_signup_button_label">새로 등록</string>
+    <string name="com_parse_ui_facebook_login_button_label">Facebook으로 로그인</string>
+    <string name="com_parse_ui_twitter_login_button_label">Twitter로 로그인</string>
+    <string name="com_parse_ui_email_input_hint">이메일</string>
+    <string name="com_parse_ui_confirm_password_input_hint">암호 확인</string>
+    <string name="com_parse_ui_name_input_hint">아이디</string>
+    <string name="com_parse_ui_create_account_button_label">아이디 생성</string>
+    <string name="com_parse_ui_no_username_toast">아이디를 입력해 주세요</string>
+    <string name="com_parse_ui_no_password_toast">암호를 입력해 주세요</string>
+    <string name="com_parse_ui_parse_login_invalid_credentials_toast">입력한 아이디 또는 암호가 맞지 않습니다</string>
+    <string name="com_parse_ui_parse_login_failed_unknown_toast">로그인 실패, 잠시 후 다시 시도해 보세요</string>
+    <string name="com_parse_ui_facebook_login_failed_toast">Facebook 로그인 실패</string>
+    <string name="com_parse_ui_twitter_login_failed_toast">Twitter 로그인 실패</string>
+
+    <plurals name="com_parse_ui_password_too_short_toast">
+        <item quantity="one">암호는 %d 자 이상 입력해 주세요</item>
+        <item quantity="other">암호는 %d 자 이상 입력해 주세요</item>
+    </plurals>
+
+    <string name="com_parse_ui_username_taken_toast">이미 존재하는 아이디입니다. 다른 아이디를 입력해 주세요</string>
+    <string name="com_parse_ui_reenter_password_toast">암호 확인 창에 암호를 한번 더 입력해 주세요</string>
+    <string name="com_parse_ui_mismatch_confirm_password_toast">암호가 맞지 않습니다. 다시 시도해 보세요</string>
+    <string name="com_parse_ui_no_email_toast">이메일을 입력해 주세요</string>
+    <string name="com_parse_ui_invalid_email_toast">잘못된 이메일입니다. 수정후 다시 시도해 보세요</string>
+    <string name="com_parse_ui_email_taken_toast">이미 사용중인 이메일 입니다. 암호를 재설정 해 보세요</string>
+    <string name="com_parse_ui_no_name_toast">아이디를 입력해 주세요</string>
+    <string name="com_parse_ui_signup_failed_unknown_toast">등록에 실패했습니다. 잠시 후 다시 시도해 보세요</string>
+    <string name="com_parse_ui_login_help_instructions">암호를 재설정 하려면 귀하의 이메일 주소를 입력해 주세요</string>
+    <string name="com_parse_ui_login_help_email_input_hint">이메일</string>
+    <string name="com_parse_ui_login_help_submit_button_label">제출</string>
+    <string name="com_parse_ui_login_help_login_again_button_label">로그인 화면으로 복귀</string>
+    <string name="com_parse_ui_login_help_submit_failed_unknown">암호 재설정 요청 실패, 다시 시도해 보세요</string>
+    <string name="com_parse_ui_login_help_email_sent">귀하의 아이디를 되찾을 방법이 적힌 이메일이 발송되었습니다. 메일을 확인해 보세요</string>
+
+</resources>

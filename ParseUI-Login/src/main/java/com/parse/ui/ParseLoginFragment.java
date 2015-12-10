@@ -22,6 +22,7 @@
 package com.parse.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -119,9 +120,10 @@ public class ParseLoginFragment extends ParseLoginFragmentBase {
   }
 
   @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
+  public void onAttach(Context context) {
+    super.onAttach(context);
 
+    final Activity activity = getActivity();
     if (activity instanceof ParseLoginFragmentListener) {
       loginFragmentListener = (ParseLoginFragmentListener) activity;
     } else {

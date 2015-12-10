@@ -8,21 +8,18 @@ The `ParseUI-Widget` library provides several useful UI widgets which integrate 
 
 
 ## Import to your project
-1. Clone this repository onto your machine.
-2. Configure Parse SDK by following this [tutorial](https://www.parse.com/apps/quickstart#parse_data/mobile/android/native/existing).
-3. Import `ParseUI-Login` and `ParseUI-Widget` as modules into your app's Android Studio Project
-    * File > Import Module in Android Studio
-    * In the New Module pop-up, set the source directory to the `ParseUI-Android/ParseUI-Login` and `ParseUI-Android/ParseUI-Widget` folder within the cloned repo.
-4. Add the following to the `dependencies` section of your app's build.gradle.
+1. Configure Parse SDK by following this [tutorial](https://www.parse.com/apps/quickstart#parse_data/mobile/android/native/existing).
+2. Add the following to the `dependencies` section of your app's build.gradle.
 
     ```grovvy
     // Module dependency on ParseUI libraries sources
-    compile project(':ParseUI-Login')
-    compile project(':ParseUI-Widget')
+    compile 'com.parse:parseui-login-android:0.0.1'
+    compile 'com.parse:parseui-widget-android:0.0.1'
 
-    // Uncomment if using Facebook Login (optional Maven dependency)
+    // Uncomment if using Facebook or Twitter Login (optional Maven dependency)
     // compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     // compile 'com.parse:parsefacebookutils-v4-android:1.10.3@aar'
+    // compile 'com.parse:parsetwitterutils-android:1.10.3'
     ```
 
 ## Usage
