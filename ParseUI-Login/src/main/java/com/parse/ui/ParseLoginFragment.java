@@ -166,7 +166,7 @@ public class ParseLoginFragment extends ParseLoginFragmentBase {
     parseLoginButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        String username = usernameField.getText().toString();
+        String username = usernameField.getText().toString().trim();
         String password = passwordField.getText().toString();
 
         if (username.length() == 0) {
