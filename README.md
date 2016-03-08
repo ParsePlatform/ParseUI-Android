@@ -23,7 +23,7 @@ The `ParseUI-Widget` library provides several useful UI widgets which integrate 
     ```
 
 ## Usage
-Please check the tutorial in our [wiki](https://github.com/ParsePlatform/ParseUI-Android/wiki);
+Please check the tutorial in our [wiki](https://github.com/ParsePlatform/ParseUI-Android/wiki/Login-Library);
 
 ## Documentation
 For complete details about this library project, please see our [documentation](https://www.parse.com/docs/android/guide#user-interface-parseloginui) on the Parse website.
