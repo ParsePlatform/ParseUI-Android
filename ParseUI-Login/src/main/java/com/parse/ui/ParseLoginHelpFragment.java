@@ -104,7 +104,7 @@ public class ParseLoginHelpFragment extends ParseLoginFragmentBase implements On
   @Override
   public void onClick(View v) {
     if (!emailSent) {
-      String email = emailField.getText().toString();
+      String email = emailField.getText().toString().trim();
       if (email.length() == 0) {
         showToast(R.string.com_parse_ui_no_email_toast);
       } else {
