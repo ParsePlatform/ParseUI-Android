@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         style="@style/ParseLoginUI.EditText"
         android:hint="@string/com_parse_ui_username_input_hint"
-		android:inputType="textVisiblePassword"/>
+        android:inputType="textVisiblePassword"/>
 
     <EditText
         android:id="@+id/login_password_input"
