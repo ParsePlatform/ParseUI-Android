@@ -12,6 +12,12 @@
     tools:context="com.parse.ui.widget.sample.MainActivity">
 
     <Button
+        android:id="@+id/sample_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/recycler_name"/>
+
+    <Button
         android:id="@+id/sample_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

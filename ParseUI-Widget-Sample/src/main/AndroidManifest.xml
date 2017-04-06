@@ -29,6 +29,10 @@
         </activity>
 
         <activity
+            android:name=".RecyclerActivity"
+            android:label="@string/recycler_name"/>
+
+        <activity
             android:name=".ListActivity"
             android:label="@string/list_name"/>
     </application>

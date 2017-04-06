@@ -1,20 +1,16 @@
 package com.parse.ui.widget.sample;
 
-import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.widget.util.ParseQueryPager;
@@ -22,42 +18,51 @@ import com.parse.widget.util.ParseQueryPager;
 import java.util.List;
 
 import bolts.CancellationTokenSource;
+import bolts.Continuation;
+import bolts.Task;
 
+public class RecyclerActivity extends AppCompatActivity {
 
-public class ListActivity extends AppCompatActivity {
+  private SwipeRefreshLayout refreshLayout;
+
+  private MyAdapter<ParseObject> adapter;
 
   @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_list);
+    setContentView(R.layout.activity_recycler);
 
-    ListView listView = (ListView) findViewById(R.id.list);
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
-    final MyAdapter<ParseObject> adapter = new MyAdapter<>(createPager());
-    listView.setAdapter(adapter);
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+    recyclerView.setLayoutManager(layoutManager);
 
-    final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+    adapter = new MyAdapter<>(createPager());
+    recyclerView.setAdapter(adapter);
+
+    refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
     refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override
       public void onRefresh() {
         final ParseQueryPager<ParseObject> pager = createPager();
-        pager.loadNextPage(new FindCallback<ParseObject>() {
+        pager.loadNextPage().continueWith(new Continuation<List<ParseObject>, Void>() {
           @Override
-          public void done(List<ParseObject> objects, ParseException e) {
+          public Void then(Task<List<ParseObject>> task) throws Exception {
             refreshLayout.setRefreshing(false);
 
-            if (objects == null && e == null) { // cancelled
-              return;
+            if (task.isCancelled()) {
+              return null;
             }
 
-            if (e != null) {
-              return;
+            if (task.isFaulted()) {
+              return null;
             }
 
             adapter.swap(pager);
             adapter.notifyDataSetChanged();
+            return null;
           }
-        });
+        }, Task.UI_THREAD_EXECUTOR);
       }
     });
   }
@@ -65,16 +70,15 @@ public class ListActivity extends AppCompatActivity {
   private ParseQueryPager<ParseObject> createPager() {
     ParseQuery<ParseObject> query = ParseQuery.getQuery("TestObject");
     query.orderByAscending("name");
-    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
     return new ParseQueryPager<>(query, 25);
   }
 
-  public static class MyAdapter<T extends ParseObject> extends BaseAdapter {
+  public static class MyAdapter<T extends ParseObject> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int TYPE_ITEM = 0;
-    public static final int TYPE_NEXT = 1;
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_NEXT = 1;
 
-    private static class ItemViewHolder extends ViewHolder {
+    private static class ItemViewHolder extends RecyclerView.ViewHolder {
       TextView textView;
 
       public ItemViewHolder(View itemView) {
@@ -83,7 +87,7 @@ public class ListActivity extends AppCompatActivity {
       }
     }
 
-    private static class NextViewHolder extends ViewHolder {
+    private static class NextViewHolder extends RecyclerView.ViewHolder {
       TextView textView;
       ProgressBar progressBar;
 
@@ -139,59 +143,43 @@ public class ListActivity extends AppCompatActivity {
         cts = this.cts;
       }
 
-      // Utilizing callbacks to support CACHE_THEN_NETWORK
-      pager.loadNextPage(new FindCallback<T>() {
+      final int oldSize = pager.getObjects().size();
+
+      // Uses Tasks, so it does not support CACHE_THEN_NETWORK. See ListActivity for a sample
+      // with callbacks.
+      pager.loadNextPage(cts.getToken()).continueWith(new Continuation<List<T>, Task<Void>>() {
         @Override
-        public void done(List<T> results, ParseException e) {
-          if (results == null && e == null) { // cancelled
-            return;
+        public Task<Void> then(Task<List<T>> task) throws Exception {
+          if (task.isCancelled()) {
+            return null;
           }
 
-          if (e != null) {
+          if (task.isFaulted()) {
             notifyDataSetChanged();
-            return;
+            return null;
           }
 
-          notifyDataSetChanged();
+          // Remove "Load more..."
+          notifyItemRemoved(oldSize);
+
+          // Insert results
+          List<T> results = task.getResult();
+          if (results.size() > 0) {
+            notifyItemRangeInserted(oldSize, results.size());
+          }
+
+          if (pager.hasNextPage()) {
+            // Add "Load more..."
+            notifyItemInserted(pager.getObjects().size());
+          }
+          return null;
         }
-      }, cts.getToken());
-      notifyDataSetChanged();
+      });
+      notifyItemChanged(oldSize);
     }
 
     @Override
-    public int getCount() {
-      ParseQueryPager<T> pager = getPager();
-      return pager.getObjects().size() + (pager.hasNextPage() ? 1 : 0);
-    }
-
-    @Override
-    public T getItem(int position) {
-      List<T> objects = getPager().getObjects();
-      return position < objects.size() ? objects.get(position) : null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return position;
-    }
-
-    @Override
-    public final View getView(int position, View convertView, ViewGroup parent) {
-      ViewHolder holder;
-      View view;
-      if (convertView == null) {
-        holder = onCreateViewHolder(parent, getItemViewType(position));
-        view = holder.itemView;
-        view.setTag(holder);
-      } else {
-        view = convertView;
-        holder = (ViewHolder) view.getTag();
-      }
-      onBindViewHolder(holder, position);
-      return view;
-    }
-
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       LayoutInflater inflater = LayoutInflater.from(parent.getContext());
       switch (viewType) {
         case TYPE_ITEM: {
@@ -217,10 +205,11 @@ public class ListActivity extends AppCompatActivity {
       }
     }
 
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
       switch (getItemViewType(position)) {
         case TYPE_ITEM: {
-          ParseObject item = getItem(position);
+          ParseObject item = getPager().getObjects().get(position);
 
           ItemViewHolder vh = (ItemViewHolder) holder;
           vh.textView.setText(item.getString("name"));
@@ -235,8 +224,9 @@ public class ListActivity extends AppCompatActivity {
     }
 
     @Override
-    public int getViewTypeCount() {
-      return 2;
+    public int getItemCount() {
+      ParseQueryPager<T> pager = getPager();
+      return pager.getObjects().size() + (pager.hasNextPage() ? 1 : 0);
     }
 
     @Override
@@ -245,18 +235,10 @@ public class ListActivity extends AppCompatActivity {
     }
 
     @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-      super.registerDataSetObserver(observer);
-      // We use this method as a notification that the ListView is bound to the adapter.
+    public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+      super.registerAdapterDataObserver(observer);
+      // We use this method as a notification that the RecyclerView is bound to the adapter.
       loadNextPage();
-    }
-
-    public static class ViewHolder {
-      private View itemView;
-
-      public ViewHolder(View itemView) {
-        this.itemView = itemView;
-      }
     }
   }
 }

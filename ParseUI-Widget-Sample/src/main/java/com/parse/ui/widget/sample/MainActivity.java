@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    findViewById(R.id.sample_recycler).setOnClickListener(this);
     findViewById(R.id.sample_list).setOnClickListener(this);
   }
 
@@ -21,6 +22,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   public void onClick(View v) {
     int id = v.getId();
     switch (id) {
+      case R.id.sample_recycler: {
+        Intent intent = new Intent(this, RecyclerActivity.class);
+        startActivity(intent);
+        break;
+      }
       case R.id.sample_list: {
         Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
