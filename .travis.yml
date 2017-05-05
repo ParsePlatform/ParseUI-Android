@@ -13,8 +13,6 @@ android:
     - build-tools-25.0.2
     - android-25
     - android-22
-    - android-23
-
     - extra-android-support
     - extra-android-m2repository
 
