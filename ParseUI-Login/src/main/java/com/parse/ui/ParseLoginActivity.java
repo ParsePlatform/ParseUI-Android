@@ -42,21 +42,21 @@ import com.parse.ParseFacebookUtils;
  * Facebook, and Twitter. If the user is new, they can also sign up. Under
  * normal operation, the user can only exit this activity by either successfully
  * logging in, or backing out of the login/signup flow.
- * <p/>
+ * <p>
  * If your app allows Facebook/Twitter login, you must initialize
  * ParseFacebookUtils/ParseTwitterUtils prior to starting this activity.
- * <p/>
+ * <p>
  * The caller activity should expect to receive one of the following resultCode
  * values:
- * <p/>
+ * <p>
  * Activity.RESULT_OK: The user successfully completed login or sign-up, and we
  * were able to retrieve a valid ParseUser object. ParseUser.getCurrentUser()
  * should be populated.
- * <p/>
+ * <p>
  * Activity.RESULT_CANCELLED: The user exited the login flow without logging in
  * or signing up (by clicking the back button). ParseUser.getCurrentUser()
  * should be null.
- * <p/>
+ * <p>
  * You can customize this activity by:
  * <ul>
  * <li>Adding activity meta-data in your app's Manifest.xml. Please see

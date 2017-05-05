@@ -310,7 +310,7 @@ public class ParseLoginConfig {
   /**
    * Constructs a ParseLoginConfig object from a bundle. Unrecognized keys are
    * ignored.
-   * <p/>
+   * <p>
    * This can be used to pass an ParseLoginConfig object between activities, or
    * to read settings from an activity's meta-data in Manefest.xml.
    *

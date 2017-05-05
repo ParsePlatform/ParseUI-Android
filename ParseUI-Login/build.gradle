@@ -26,6 +26,13 @@ apply plugin: 'com.android.library'
 version = "0.0.1"
 group = 'com.parse'
 
+ext {
+     projName = 'ParseUI-Login-Android'
+     projArtifact = 'parseui-login-android'
+     projDescription = 'A library contains login user interfaces for building apps with the Parse Android SDK.'
+     projGitlink = 'https://github.com/ParsePlatform/ParseUI-Android'
+}
+
 dependencies {
     compile rootProject.ext.androidSupport
     compile rootProject.ext.parse
@@ -84,6 +91,29 @@ def isSnapshot = version.endsWith('-SNAPSHOT')
 def ossrhUsername = hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : System.getenv('CI_NEXUS_USERNAME')
 def ossrhPassword = hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : System.getenv('CI_NEXUS_PASSWORD')
 
+def pomConfig = {
+    scm {
+        connection 'scm:git@github.com:ParsePlatform/ParseUI-Android.git'
+        developerConnection 'scm:git@github.com:ParsePlatform/ParseUI-Android.git'
+        url 'https://github.com/ParsePlatform/ParseUI-Android'
+    }
+
+    licenses {
+        license {
+            name 'Platform License'
+            url 'https://github.com/ParsePlatform/ParseUI-Android/blob/master/LICENSE'
+            distribution 'repo'
+        }
+    }
+
+    developers {
+        developer {
+            id 'parse'
+            name 'Parse'
+        }
+    }
+}
+
 uploadArchives {
     repositories.mavenDeployer {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
@@ -96,34 +126,15 @@ uploadArchives {
             authentication(userName: ossrhUsername, password: ossrhPassword)
         }
 
-        pom.project {
-            name 'ParseUI-Login-Android'
+        def basePom = {
+            name projName
             packaging 'aar'
-            artifactId 'parseui-login-android'
-            description 'A library contains login user interfaces for building apps with the Parse Android SDK.'
-            url 'https://github.com/ParsePlatform/ParseUI-Android'
-
-            scm {
-                connection 'scm:git@github.com:ParsePlatform/ParseUI-Android.git'
-                developerConnection 'scm:git@github.com:ParsePlatform/ParseUI-Android.git'
-                url 'https://github.com/ParsePlatform/ParseUI-Android'
-            }
-
-            licenses {
-                license {
-                    name 'Platform License'
-                    url 'https://github.com/ParsePlatform/ParseUI-Android/blob/master/LICENSE'
-                    distribution 'repo'
-                }
-            }
-
-            developers {
-                developer {
-                    id 'parse'
-                    name 'Parse'
-                }
-            }
+            artifactId projArtifact
+            description projDescription
+            url projGitlink
         }
+
+        pom.project basePom << pomConfig
     }
 }
 
